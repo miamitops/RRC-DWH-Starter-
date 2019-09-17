@@ -1,0 +1,38 @@
+.tile-stats .glyphs .icon{
+	font-size: 28px;
+	font-weight:bold;
+	color: #0b6eb5;
+}
+table.content{
+	width:100%;
+}
+table.content tr td{
+	padding:4px;
+	border-bottom:1px solid #0b6eb5;
+}
+tr th{
+	background-color:#0b6eb5;
+	color:#FFF;
+	padding:0 5px 0 5px;
+	
+}
+.tile-stats .count, .tile-stats h3, .tile-stats p{
+	color:#0b6eb5;
+}
+.demographics-container svg.nvd3-svg{
+	max-height:250px !important;
+}
+.wtSpreader table{
+	width:100%;
+}
+.wtSpreader table tr{
+	width:100%
+}
+table.htCore{
+	width:100% !important;
+	display:block;
+}
+button.md-button{
+	background-color:#0b6eb5;
+	
+}

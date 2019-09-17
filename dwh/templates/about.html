@@ -1,0 +1,24 @@
+{% load static %}
+<link media="all" href="{% static 'nvd3/build/nv.d3.css' %}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src='{% static 'd3/d3.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'nvd3/nv.d3.min.js' %}'></script>
+
+{% load nvd3_tags %}
+<head>
+{% load_chart charttype chartdata "piechart_container" %}
+</head>
+<body>
+{% block content %}
+<ul>
+	{% for ctry in resp %}
+	<li>{{ctry}}</li>
+	{% endfor %}
+</ul>
+<ul>
+	{% for rst in htm %}
+	<li>{{rst}}</li>
+	{% endfor %}
+</ul>
+{% include_container "piechart_container" 400 1200 %}
+{% endblock %}
+</body>

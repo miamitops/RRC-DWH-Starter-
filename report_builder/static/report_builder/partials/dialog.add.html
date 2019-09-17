@@ -1,0 +1,105 @@
+<md-dialog aria-label="add (Field)">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add a field <small> to your report</small></h2>
+        <span flex></span>
+
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px; ">
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Display">
+          <md-content class="md-padding">
+           <div class="tab-title">  <h3 class="md-display-2">Display options for {{ field.field_verbose }} </h3></div>
+           <div class="desc"> Add a display(column) with <i><b>"{{ field.field_verbose }}" </b></i>values.  </div>
+           <div class="tab-content">
+                      
+            <div flex="" class="caps">
+			      <span ng-if="field.path_verbose">
+			          ({{ field.path_verbose }}) 
+			      </span>
+			  </div>
+          <div flex="" class="field-display">
+          <label> Display Title: </label>
+		  <input type="text" ng-model="field.name"></input>
+		  </div>
+		  </div>
+
+          </md-content>
+        </md-tab>
+        <md-tab label="Aggregation">
+          <md-content class="md-padding">
+          <div class="tab-title"> <h3 class="md-display-2">Aggregation options for {{ field.field_verbose }} </h3></div>
+         <div class="tab-content"> 
+       <div class="col_aggregate" flex="">
+       <div class="field-aggregate"> 
+           <select ng-model="field.aggregate">
+      <option value="" selected="selected">---------</option>
+      <option value="Sum">Sum</option>
+      <option value="Count">Count</option>
+      <option value="Avg">Avg</option>
+      <option value="Max">Max</option>
+      <option value="Min">Min</option>
+    </select>
+    
+    <div flex="" ng-switch="field.field_type">
+        <div ng-switch-when="CharField">
+          <select ng-model="field.filter_value">
+            <option value="1">Sunday</option>
+            <option value="2">Monday</option>
+            <option value="3">Tuesday</option>
+            <option value="4">Wednesday</option>
+            <option value="5">Thursday</option>
+            <option value="6">Friday</option>
+            <option value="7">Saturday</option>
+          </select>
+        </div>
+        <div ng-switch-when="isnull">
+          <md-checkbox ng-model="field.filter_value" ng-true-value="'True'" aria-label="Is Null">
+        </div>
+        <div ng-switch-when="max">
+         <md-checkbox ng-model="field.filter_value" ng-true-value="'True'" aria-label="Max (annotation-filter)">
+        </div>
+        <div ng-switch-when="min">
+          <md-checkbox ng-model="field.filter_value" ng-true-value="'True'" aria-label="Min (annotation-filter)">
+        </div>
+        <div ng-switch-default ng-switch="field.field_type">
+          <input ng-switch-when="DateField" pikaday="pikaday" format="YYYY-MM-DD" ng-model="field.filter_value"></input>
+          <div ng-switch-when="BooleanField">
+            <md-checkbox ng-model="field.filter_value">
+          </div>
+          <input ng-switch-default type="text" ng-model="field.filter_value"></input>
+          <div ng-if="field.filter_type == 'range'" flex="" ng-switch="field.field_type">
+            <input ng-switch-when="DateField" pikaday="pikaday" format="YYYY-MM-DD" ng-model="field.filter_value2"></input>
+            <input ng-switch-default type="text" ng-model="field.filter_value2"></input>
+          </div>
+        </div>
+      </div>
+       </div>       
+
+  </div>
+  </div> 
+ </md-content>
+        </md-tab>
+        <md-tab label="Settings">
+          <md-content class="md-padding">
+            <h3 class="md-display-2">Settings</h3>
+            <p>
+            </p>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" ng-controller="FieldsCtrl">
+
+      <span flex></span>
+      <md-button ng-click="answer('Cancel')" >
+        Cancel
+      </md-button>
+      <md-button ng-click="add_field(field, index)" style="margin-right:20px;" >
+        Add 
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

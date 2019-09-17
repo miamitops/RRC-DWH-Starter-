@@ -1,0 +1,14 @@
+                  <li><a><i class="fa fa-edit"></i> Situations <span class="fa fa-chevron-down"></span></a>
+                  	<ul class="nav child_menu">
+                  	{% for situation in situations %}
+                  		<li><a href="/situation/{{ situation.situationID }}">{{ situation.countryName }}</a></li>
+                  	{% endfor %}
+                  	</ul>
+                  </li>
+                  <li><a><i class="fa fa-globe"></i> Host Countries <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      {% for country in countries %}
+                  		<li><a href="/country/{{ country.countryID }}">{{ country.countryName }}</a></li>
+                  	{% endfor %}
+                    </ul>
+                  </li>

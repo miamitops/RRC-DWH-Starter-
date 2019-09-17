@@ -1,0 +1,158 @@
+<md-dialog aria-label="add (Field)">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add a filter <small> to your report</small></h2>
+        <span flex></span>
+
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="max-width:800px;max-height:810px; ">
+          <md-content class="md-padding">
+            <h1 class="md-display-2">Filter</h1>
+              <div flex="" class="caps">
+      <span ng-if="field.path_verbose">
+          ({{ field.path_verbose }}) 
+      </span>
+      {{ field.field_verbose }}
+  </div>
+  <h3> Filter Criteria</h3>
+  		<div class="col_filter_type" flex="">
+        <select ng-model="field.filter_type" ng-options="item.value as item.display_name for item in filterFieldOptions.filter_type.choices">
+        </select>
+      </div>
+      {{field.filterFieldOptions}}
+
+      <div flex="" ng-switch="field.filter_type">
+        <div ng-switch-when="week_day">
+          <select ng-model="field.filter_value">
+            <option value="1">Sunday</option>
+            <option value="2">Monday</option>
+            <option value="3">Tuesday</option>
+            <option value="4">Wednesday</option>
+            <option value="5">Thursday</option>
+            <option value="6">Friday</option>
+            <option value="7">Saturday</option>
+          </select>
+        </div>
+        <div ng-switch-when="isnull">
+          <md-checkbox ng-model="field.filter_value" ng-true-value="'True'" aria-label="Is Null">
+        </div>
+        <div ng-switch-when="max">
+         <md-checkbox ng-model="field.filter_value" ng-true-value="'True'" aria-label="Max (annotation-filter)">
+        </div>
+        <div ng-switch-when="min">
+          <md-checkbox ng-model="field.filter_value" ng-true-value="'True'" aria-label="Min (annotation-filter)">
+        </div>
+        <div ng-switch-default ng-switch="field.field_type">
+          <input ng-switch-when="DateField" pikaday="pikaday" format="YYYY-MM-DD" ng-model="field.filter_value"></input>
+          <div ng-switch-when="BooleanField">
+            <md-checkbox ng-model="field.filter_value">
+          </div>
+          <input ng-switch-default type="text" ng-model="field.filter_value"></input>
+          </div>
+          <div ng-if="field.filter_type == 'range'" flex="" ng-switch="field.field_type">
+            <input ng-switch-when="DateField" pikaday="pikaday" format="YYYY-MM-DD" ng-model="field.filter_value2"></input>
+            <input ng-switch-default type="text" ng-model="field.filter_value2"></input>
+          </div>
+          <div ng-if="field.filter_type == 'exact'" flex="" ng-switch="field.field_type">
+          <div ng-if="field.name == 'nationalitycode' || field.name == 'asylumcountrycode'" flex="">
+          <select ng-model="field.filter_value">
+            <option value="KEN">Kenya</option>
+            <option value="UGA">Uganda</option>
+            <option value="TAN">Tanzania</option>
+            <option value="SSD">South Sudan</option>
+            <option value="SUD">Sudan</option>
+            <option value="BDI">Burundi</option>
+            <option value="COD">Congo (Democratic Republic)</option>
+          </select>
+          </div>
+          </div>
+          <div ng-if="field.filter_type == 'in'" flex="" ng-switch="field.field_type">
+          <div ng-if="field.name == 'nationalitycode' || field.name == 'asylumcountrycode'" flex="">
+
+          <select ng-model="field.filter_value">
+            <option value="KEN">Kenya</option>
+            <option value="UGA">Uganda</option>
+            <option value="TAN">Tanzania</option>
+            <option value="SSD">South Sudan</option>
+            <option value="SUD">Sudan</option>
+            <option value="BDI">Burundi</option>
+            <option value="COD">Congo (Democratic Republic)</option>
+          </select>
+          </div>
+          </div>
+        
+        <!--  Age group -->
+        <div ng-if="field.name == 'individualagecohortcode'" flex="">
+        <div ng-if="field.filter_type == 'exact'" flex="" ng-switch="field.field_type">
+        	<select ng-model="field.filter_value">
+        		<option ng-repeat="agegroup in agegroups" value="{{agegroup.code}}">{{agegroup.ages}}</option>
+        	</select>
+        </div>
+        <div ng-if="field.filter_type == 'in'" flex="" ng-switch="field.field_type">
+        </div>
+         <div ng-if="field.filter_type == 'contains'" flex="" ng-switch="field.field_type">
+         <div class="unallowed"> This filter criteria cannot be used with "{{field.field_verbose}}" field</div>
+        </div>
+        
+        </div>
+        <!-- end age group -->
+        
+        <!-- Refugee status -->
+        <div ng-if="field.name == 'refugeestatuscode'" flex="">
+        <div ng-if="field.filter_type == 'exact'" flex="" ng-switch="field.field_type">
+        <select ng-model="field.filter_value">
+        	<option ng-repeat="refugeestatus in refugeestatuses" value="{{refugeestatus.code}}"> {{refugeestatus.status}}</option>
+        </select>
+        </div>
+        </div>
+        <!-- end refugee status -->
+        
+        <!--  Active status -->
+        <div ng-if="field.name == 'processstatuscode'" flex="">
+        <div ng-if="field.filter_type == 'exact'" flex="" ng-switch="field.field_type">
+        <select ng-model="field.filter_value">
+        	<option ng-repeat="processtatus in processtatuses" value="{{processtatus.code}}"> {{processtatus.status}}</option>
+        </select>
+        </div>
+        </div>
+        <!-- end active status -->
+        
+        <!-- gender -->
+        <div ng-if="field.name == 'gender'" flex="">
+        <div ng-if="field.filter_type == 'exact'" flex="" ng-switch="field.field_type">
+	        <select ng-model="field.filter_value">
+	        <option value="M">Male</option>
+	        <option value="F">Female</option>
+	        </select>
+        </div>
+        </div>
+        <!-- end gender -->
+        
+        <!-- dates -->
+        <div ng-if="field.name == 'arrivaldate' || field.name == 'registrationdate'" flex="">
+        <div ng-if="field.filter_type == 'range'" flex="" ng-switch="field.field_type">
+        	<input pikaday="pikaday" format="YYYY-MM-DD" ng-model="field.filter_value"></input>
+        	<input pikaday="pikaday" format="YYYY-MM-DD" ng-model="field.filter_value2"></input>
+        </div>
+        </div>
+        <!-- end dates -->
+        </div>
+
+
+
+          </md-content>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" ng-controller="FieldsCtrl">
+
+      <span flex></span>
+      <md-button ng-click="answer('Cancel')" >
+        Cancel
+      </md-button>
+      <md-button ng-click="add_field(field, index)" style="margin-right:20px;" >
+        Add
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -1,0 +1,244 @@
+<div class="fullheight" id="reportapp" layout="column" layout-fill="">
+  <section class="fullheight" layout="row">
+    <md-sidenav class="fullheight md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-lg')">
+  <div class="column column-second">
+          <md-content id="section3" class="section section3" aria-controls="tab3-content">
+          
+          <div class="fullheight" ng-include="static('sidebar.html')"></div>
+
+          </md-content>
+          
+   </div>
+      
+    </md-sidenav>
+    <div class="fullheight" flex="">
+      <md-toolbar class="md-theme-indigo">
+      
+        <h1 class="md-toolbar-tools">
+        <md-input-container>
+          <label>Name</label>
+          <input ng-model="report.name" class="long"></input>
+        </md-input-container>
+          <span flex=""></span>
+          <span>Last Updated: {{ report.modified }}</span>
+          <md-content class="fullheight" ng-controller="ReportShowCtrl">
+    <div class="section3">
+        <md-button ng-click="save()">Save</md-button>
+        <md-button ng-click="getPreview()">Preview</md-button>
+        <md-button ng-click="downloadReport('xlsx')"><a ng-href="">Excel</a></md-button>
+        <!--  <md-button ng-click="downloadReport('csv')"><a ng-href="">csv</a></md-button>-->
+        <span ng-if="report.lastSaved == null">
+            <div class="not-saved">&nbsp;</div>
+        </span>
+    </div>
+    
+</md-content>
+          
+        </h1>
+      </md-toolbar>
+      <md-content class="report-tabs-height">
+      <div class="column column-top">
+      <div class="display-fields">
+      
+          <md-content id="section1" class="section section1" aria-controls="tab1-content">
+           <div class="section-title"> <h2>Display</h2></div>
+            <div class="sect-desc"> This represents the class of information that you would want to analyze.</div>
+            <div class="section-content">
+  
+            <md-content>
+              <div ui-tree="" ng-controller="ReportDisplayCtrl">
+                <div layout="row">
+                  <div class="move_trash" flex="">Actions</div>
+                  <div flex="">Field</div>
+                  <div flex="">Display</div>
+                  <div flex="">Aggr</div>
+                  <div flex="">Grp</div>
+                </div>
+                <div>
+                  <ol ui-tree-nodes="" ng-model="report.displayfield_set">
+                    <li class="field" data-collapsed="false" ng-repeat="field in report.displayfield_set" ui-tree-node="">
+                      <div layout-align="center center" ng-include="static('report_builder/partials/display_field.html')"></div>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+              <div hide-gt-lg layout="row" layout-sm="column" layout-align="center center" style="height: 55px;">
+                <md-button class="fullscreen" ng-click="requestFullscreen()" aria-label="Fullscreen">
+                  Fullscreen
+                </md-button>
+              </div>
+            </md-content>
+            </div>
+          </md-content>
+         </div>
+         <div class="filter-fields">
+          
+          
+          <md-content id="section2" class="section section2" aria-controls="tab2-content">
+            <div class="section-title"><h2>Filter</h2></div>
+          
+            <div class="sect-desc"> This represents the conditions of population of people you would like to analyze information for.(All conditions must pass)</div>
+            <div class="section-content">
+            <md-content>
+              <div ng-include="static('report_builder/partials/filters.html')"></div>
+            </md-content>
+            </div>
+          </md-content>
+          </div></div>
+          <div class="column column-options">
+          <div class="report-options">
+          <md-content id="section4" class="section section4" aria-controls="tab3-content">
+          	<div class="section-title">
+            <h2>Options</h2>
+           </div>
+           <div class="section-content">
+            <md-content>
+              <div ng-include="static('report_builder/partials/options.html')"></div>
+            </md-content>
+            </div>
+          </md-content>
+          </div>
+          </div>
+        <div id=" column-preview" class="column column-preview">
+        <div class="report-preview">
+          <md-content id="section5" class="section section5" aria-controls="section3-content">
+          <div style="height: calc(100% - 31px);">
+        <div ng-if="workerStatus">
+            {{ workerStatus }}
+            <div ng-if="workerState == 'PENDING'">
+                <md-progress-linear class="md-accent" md-mode="indeterminate"></md-progress-linear>
+            </div>
+        </div>
+        <div ng-if="reportData.refresh == true">
+            <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+        </div>
+        <div ng-if="reportData.statusMessage">
+            {{ reportData.statusMessage }}
+        </div>
+        <div ng-if="reportData.reportErrors">
+            <div ng-if="reportData.reportErrors.displayfield_set">
+                <h4>Display Field Errors</h4>
+                <ul>
+                    <li ng-repeat="(index, error) in reportData.reportErrors.displayfield_set">
+                        <span ng-repeat="(key, values) in error">
+                            {{ report.displayfield_set[index].field_verbose }}
+                            {{ key }}:
+                            <span ng-repeat="value in values">
+                                {{ value }}
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="reportData.reportErrors.filterfield_set">
+                <h4>Filter Field Errors</h4>
+                <ul>
+                    <li ng-repeat="(index, error) in reportData.reportErrors.filterfield_set">
+                        <span ng-repeat="(key, values) in error">
+                            {{ report.filterfield_set[index].field_verbose }}
+                            {{ key }}:
+                            <span ng-repeat="value in values">
+                                {{ value }}
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="fullheight" style="width:100%; overflow: auto" ng-if="reportData.refresh == false">
+        <div class="section">
+        <div class="section-title"><h2> Preview</h2></div>
+        <div class="table">
+        <div class="table-head layout-row">
+        <div ng-repeat="col in reportData.columns" flex>  <span> {{col.title}} </span></div>
+        </div>
+        <div class="table-body">
+        <div ng-repeat="row in reportData.items" class="layout-row">  
+        
+        <div ng-repeat="cell in row" flex><span> {{cell}} </div></span></div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+    </div></md-content></div>
+        </div> 
+        <div class="column column-clear">
+        <div class="section section9"><p>&nbsp;</p><p>&nbsp;</p> </div>
+        </div>
+         
+      </md-content>
+      <md-button hide-gt-lg class="md-fab md-fab-bottom-left" ng-click="reports_list_menu()" aria-label="Reports List">
+        <md-icon md-svg-src="{{ static('report_builder/img/list.svg') }}" style="width: 24px; height: 24px;"></md-icon>
+      </md-button>
+      <md-button hide-gt-md ng-show="selectedIndex == 0 || selectedIndex == 1" class="md-fab md-fab-bottom-right" ng-click="field_menu()" aria-label="Add Field">
+        <md-icon md-svg-src="{{ static('report_builder/img/add.svg') }}" style="width: 24px; height: 24px;"></md-icon>
+      </md-button>
+    </div>
+    <md-sidenav class="fullheight md-sidenav-right md-whiteframe-z2" md-component-id="right" md-is-locked-open="$mdMedia('gt-lg')">
+    <md-content class="fullheight" ng-controller="FieldsCtrl">
+    <md-content id="section6" class="section section6" aria-controls="tab3-content">
+  <div style="overflow-y: auto; height:45%" >
+   <div class="section-title"> 
+
+             <h3> <span class="caps">{{ report.root_model_name }} Relations</span></h3>
+    </div> 
+    <div class="sect-desc"></div>
+    <div class="section-content">
+    <input placeholder="Search Relations" style="width: 100%" ng-model="searchRelations"></input>
+    <md-content>
+      <div ui-tree data-drag-enabled="false">
+      <ol ui-tree-nodes="" ng-model="related_fields">
+        <li data-collapsed="false" ng-include="static('report_builder/partials/node_renderer.html')" ng-repeat="field in related_fields | filter:searchRelations" ui-tree-node>
+        </li>
+      </ol>
+      </div>
+    </md-content></div>
+
+  </div>
+  </md-content>
+  <md-content id="section7" class="section section7" aria-controls="tab3-content">
+  <div style="overflow-y: auto; height:45%">
+  <div class="section-title"> 
+        <h3><span class="caps">{{ fields_header }} Fields</span></h3>
+   </div>
+   <div class="sect-desc"> </div>
+   <div class="section-content">
+    <input placeholder="Search Fields" style="width: 100%" ng-model="searchFields"></input>
+    <md-content>
+      <div ui-tree data-drag-enabled="false">
+      <ol ui-tree-nodes="" ng-model="fields">
+        <li class="field dt-{{field.field_type}}" data-collapsed="false" ng-repeat="field in fields | filter:searchFields | filter:fieldCanFilter"" ui-tree-node>
+          <div ui-tree-handle layout="row" style="margin-right: 7px;">
+            <div class="caps" flex ng-click="click_field(field)">
+              {{field.field_verbose}}
+                            
+            </div>
+            <div flex="10" style="min-width: 37px;">
+                        <md-menu md-offset="0 -5">
+          <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
+            Add
+          </md-button>
+          <md-menu-content width="4">
+            <md-menu-item ng-repeat="item in ['Display', 'Filter']">
+              <md-button ng-click="showAdvanced(field, $event, $index)"> <span md-menu-align-target>Add</span> {{item}} </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+            </div>
+          </div>
+        </li>
+      </ol>
+      </div>
+   
+
+  </div></div>
+   </md-content>
+  <md-content style="overflow-y: auto; height:10%">
+    {{ help_text }}
+  </md-content>
+</md-content>
+</md-sidenav>
+
+  </section>
+</div>

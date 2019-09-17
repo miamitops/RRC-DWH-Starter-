@@ -1,0 +1,25 @@
+{% load static %}
+<link media="all" href="{% static 'nvd3/build/nv.d3.css' %}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src='{% static 'd3/d3.min.js' %}'></script>
+<script type="text/javascript" src='{% static 'nvd3/nv.d3.min.js' %}'></script>
+
+{% load nvd3_tags %}
+<head>
+<title>UNHCR Regional Data WareHouse For The East Horn and Great Lakes Region of Africa</title>
+</head>
+<body>
+{% block content %}
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+
+{# Read the documentation for more information #}
+{% endblock %}
+</body>

@@ -1,0 +1,122 @@
+
+'''
+**The converter ***
+use this to convert new csv to utf8
+def read_in_chunks(file_object, chunk_size=1024):
+    """Lazy function (generator) to read a file piece by piece.
+    Default chunk size: 1k."""
+    while True:
+        data = file_object.read(chunk_size)
+        if not data:
+            break
+        yield data
+def remove_white_space(filea):
+    while True: 
+        try: 
+          yield next(filea) 
+        except csv.Error: 
+          # error handling what you want.
+          pass
+        continue 
+    
+remove_white_space('./files/import/Kenya/KENKA_20160428.csv')
+def utf16_to_utf8():
+    ff_name = '.files/import/Kenya/KENKA_20160428.csv'
+    import csv
+    with open(ff_name, 'r', encoding='utf16') as csvfile:
+        spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+        for row in spamreader:
+            print ', '.join(row)
+utf16_to_utf8()
+ 
+
+** The walker ***
+use this to walk a directory and process csv files in the directory
+directoryStart = r'./files/import'
+extensionList=['.csv']
+def walker ( directoryStart , extensionList ) :
+    os.path.walk( directoryStart, walker_callback, extensionList )
+
+def walker_callback ( extensionList , directory, files ) :
+    sys.stderr.write('Scanning '+directory+'\n')
+    for fileName in files:
+        if os.path.isfile( os.path.join(directory,fileName) ) :
+            if string.lower(os.path.splitext(fileName)[1]) in extensionList :
+                csvfile = open('{}/{}'.format(directory, fileName))
+                print csvfile
+
+walker( directoryStart, extensionList) 
+
+end the walker
+
+ 
+**The Parser ***
+use this to read through csv and return a dictionary which can be imported to db row by row
+or read row and import to db consecutively while reading the next row and repeating the process
+
+csv_parser = csvparser.SCSV()           # Create a SCSV parser
+csv_parser.opencsv('n_fileut8.csv')     # Open a csv file for reading.
+
+currentrow = csv_parser.nextrow()  # Read a row
+#print(currentrow)
+#while currentrow:     # While there are remaining row, read and print them.
+    #print currentrow
+    #currentrow = csv_parser.nextrow()
+
+#print encoding'''
+
+def walk_csv_dir():
+    connection = pypyodbc.connect('Driver={SQL Server};'
+                                      'Server=localhost;'
+                                      'Database=dwh_01;'
+                                      'uid=sa;pwd=filthy6SCENT!!')
+    cursor = connection.cursor() 
+    tb_name = ''    
+    with open('files/import/Tanzania/TAND1_20160428.csv','rb') as f:
+        try:
+            sr = Recoder(f, 'utf-16', 'utf-8')
+            '''with open(sr) as filecsv:'''
+            recsv = csv.reader(sr, delimiter=',')
+            columns = next(recsv)
+            print columns
+            for row in recsv:
+                SQLCommand = ("INSERT INTO {} (IndividualID, Individualguid, FamilyName, GivenName, ConcatenatedName, RegistrationDate, DateofBirth, CountryOfOrigin, AsylumCountryCode, ArrivalDate, gender, Age, IndividualAgeCohortCode, NationalityCode, RSDStatusCode, ResettlementStatusCode, VolRepStatusCode, MarriageStatusCode, EthnicityCode, EducationLevelCode, OccupationCode, ProcessStatusCode, RefugeeStatusCode, FatherName, MotherName, SiteIDOwner, SiteIDCreate, CreateDate, IsAnyGroupPrincipalRepresentative, HasSPNeed, ProcessingGroupTypeCode, ProcessingGroupNumber, CurrentRationCardNumber, ProcessingGroupFileNumber, ProcessingGroupSize, ProcessingGroupStatusCode, ProcessGroupStatusDate, ProcessingGroupRegistrationDate, IndividualSequenceNumber, PrincipalRepresentative, RelationshipToPrincipalRepresentative, RelationshipText, COALocationLevel1ID, COALocationLevel2ID, COALocationLevel3ID, COALocationLevel4ID, COALocationLevel5ID, COOLocationLevel1ID, COOLocationLevel2ID, COOLocationLevel3ID, COOLocationLevel4ID, COOLocationLevel5ID, VulnerabilityCode, VulnerabilityDetailsCode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)".format(tb_name))
+                Values = row 
+                cursor.execute(SQLCommand,Values) 
+                connection.commit() 
+                '''print row[53]'''
+                
+            '''for row in csv.reader(sr, skipinitialspace=True):
+                print row[49]'''
+            
+        except UnicodeError as e:
+            '''file is not utf-16 presumed utf8'''
+            sr = Recoder(f, 'ISO-8859-1', 'utf-8')
+            recsv = csv.reader(sr, delimiter=',')
+            columns = next(recsv)
+            print columns
+            for row in recsv:
+                SQLCommand = ("INSERT INTO {} (IndividualID, Individualguid, FamilyName, GivenName, ConcatenatedName, RegistrationDate, DateofBirth, CountryOfOrigin, AsylumCountryCode, ArrivalDate, gender, Age, IndividualAgeCohortCode, NationalityCode, RSDStatusCode, ResettlementStatusCode, VolRepStatusCode, MarriageStatusCode, EthnicityCode, EducationLevelCode, OccupationCode, ProcessStatusCode, RefugeeStatusCode, FatherName, MotherName, SiteIDOwner, SiteIDCreate, CreateDate, IsAnyGroupPrincipalRepresentative, HasSPNeed, ProcessingGroupTypeCode, ProcessingGroupNumber, CurrentRationCardNumber, ProcessingGroupFileNumber, ProcessingGroupSize, ProcessingGroupStatusCode, ProcessGroupStatusDate, ProcessingGroupRegistrationDate, IndividualSequenceNumber, PrincipalRepresentative, RelationshipToPrincipalRepresentative, RelationshipText, COALocationLevel1ID, COALocationLevel2ID, COALocationLevel3ID, COALocationLevel4ID, COALocationLevel5ID, COOLocationLevel1ID, COOLocationLevel2ID, COOLocationLevel3ID, COOLocationLevel4ID, COOLocationLevel5ID, VulnerabilityCode, VulnerabilityDetailsCode) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)".format(tb_name))
+                Values = row 
+                cursor.execute(SQLCommand,Values) 
+                connection.commit() 
+                '''print row[53]'''
+                
+            '''for row in csv.reader(sr, skipinitialspace=True):
+                print row[49]'''
+        finally:
+            f.close()
+            connection.close()
+            print("Import Finished")
+
+walk_csv_dir()
+
+
+
+'''Create table if not exist'''
+'''    try:
+        createQ = "CREATE TABLE {}(    [IndividualID] [nvarchar](255) NULL,    [Individualguid] [nvarchar](255) NULL,    [FamilyName] [nvarchar](255) NULL,    [GivenName] [nvarchar](255) NULL,    [ConcatenatedName] [nvarchar](255) NULL,    [RegistrationDate] [nvarchar](255) NULL,    [DateofBirth] [nvarchar](255) NULL,    [CountryOfOrigin] [nvarchar](255) NULL,    [AsylumCountryCode] [nvarchar](255) NULL,    [ArrivalDate] [nvarchar](255) NULL,    [gender] [nvarchar](255) NULL,    [Age] [nvarchar](255) NULL,    [IndividualAgeCohortCode] [nvarchar](255) NULL,    [NationalityCode] [nvarchar](255) NULL,    [RSDStatusCode] [nvarchar](255) NULL,    [ResettlementStatusCode] [nvarchar](255) NULL,    [VolRepStatusCode] [nvarchar](255) NULL,    [MarriageStatusCode] [nvarchar](255) NULL,    [EthnicityCode] [nvarchar](255) NULL,    [EducationLevelCode] [nvarchar](255) NULL,    [OccupationCode] [nvarchar](255) NULL,    [ProcessStatusCode] [nvarchar](255) NULL,    [RefugeeStatusCode] [nvarchar](255) NULL,    [FatherName] [nvarchar](255) NULL,    [MotherName] [nvarchar](255) NULL,    [SiteIDOwner] [nvarchar](255) NULL,    [SiteIDCreate] [nvarchar](255) NULL,    [CreateDate] [nvarchar](255) NULL,    [IsAnyGroupPrincipalRepresentative] [nvarchar](255) NULL,    [HasSPNeed] [nvarchar](255) NULL,    [ProcessingGroupTypeCode] [nvarchar](255) NULL,    [ProcessingGroupNumber] [nvarchar](255) NULL,    [CurrentRationCardNumber] [nvarchar](255) NULL,    [ProcessingGroupFileNumber] [nvarchar](255) NULL,    [ProcessingGroupSize] [nvarchar](255) NULL,    [ProcessingGroupStatusCode] [nvarchar](255) NULL,    [ProcessGroupStatusDate] [nvarchar](255) NULL,    [ProcessingGroupRegistrationDate] [nvarchar](255) NULL,    [IndividualSequenceNumber] [nvarchar](255) NULL,    [PrincipalRepresentative] [nvarchar](255) NULL,    [RelationshipToPrincipalRepresentative] [nvarchar](255) NULL,    [RelationshipText] [nvarchar](255) NULL,    [COALocationLevel1ID] [nvarchar](255) NULL,    [COALocationLevel2ID] [nvarchar](255) NULL,    [COALocationLevel3ID] [nvarchar](255) NULL,    [COALocationLevel4ID] [nvarchar](255) NULL,    [COALocationLevel5ID] [nvarchar](255) NULL,    [COOLocationLevel1ID] [nvarchar](255) NULL,    [COOLocationLevel2ID] [nvarchar](255) NULL,    [COOLocationLevel3ID] [nvarchar](255) NULL,    [COOLocationLevel4ID] [nvarchar](255) NULL,    [COOLocationLevel5ID] [nvarchar](255) NULL,    [VulnerabilityCode] [nvarchar](255) NULL,    [VulnerabilityDetailsCode] [nvarchar](255) NULL) ON [PRIMARY]".format(tb_name) 
+        cursor.execute(createQ) 
+        connection.commit() 
+    except pypyodbc.ProgrammingError:
+        Dont do anything if the table exists'''

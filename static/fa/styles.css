@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "untitled-font-2";
+  src:url("fonts/untitled-font-2.eot");
+  src:url("fonts/untitled-font-2.eot?#iefix") format("embedded-opentype"),
+    url("fonts/untitled-font-2.woff") format("woff"),
+    url("fonts/untitled-font-2.ttf") format("truetype"),
+    url("fonts/untitled-font-2.svg#untitled-font-2") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "untitled-font-2" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "untitled-font-2" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-clusters-camp-coordination-and-camp-management-icon:before {
+  content: "\61";
+}
+.icon-clusters-camp-coordination-and-camp-management-icon-box:before {
+  content: "\62";
+}
+.icon-clusters-education-icon:before {
+  content: "\63";
+}
+.icon-clusters-education-icon-box:before {
+  content: "\64";
+}
+.icon-clusters-emergency-telecommunications-icon:before {
+  content: "\65";
+}
+.icon-clusters-emergency-telecommunications-icon-box:before {
+  content: "\67";
+}
+.icon-clusters-food-security-icon-box:before {
+  content: "\66";
+}
+.icon-clusters-food-security-icon:before {
+  content: "\68";
+}
+.icon-clusters-health-icon:before {
+  content: "\69";
+}
+.icon-clusters-health-icon-box:before {
+  content: "\6a";
+}
+.icon-clusters-logistics-icon:before {
+  content: "\6b";
+}
+.icon-clusters-logistics-icon-box:before {
+  content: "\6c";
+}
+.icon-disaster-population-displacement-icon:before {
+  content: "\6d";
+}
+.icon-disaster-population-return-icon:before {
+  content: "\6e";
+}
+.icon-disaster-population-displacement-icon-box:before {
+  content: "\6f";
+}
+.icon-disaster-earthquake-icon:before {
+  content: "\70";
+}
+.icon-clusters-protection-icon-box:before {
+  content: "\71";
+}
+.icon-clusters-protection-icon:before {
+  content: "\72";
+}
+.icon-clusters-shelter-icon-box:before {
+  content: "\73";
+}
+.icon-clusters-water-sanitation-and-hygiene-icon:before {
+  content: "\74";
+}
+.icon-clusters-shelter-icon:before {
+  content: "\75";
+}
+.icon-food-nfi-nonfood-item-icon-box:before {
+  content: "\76";
+}
+.icon-food-nfi-vaccine-icon-box:before {
+  content: "\77";
+}
+.icon-other-clusters-coordination-icon-box:before {
+  content: "\78";
+}
+.icon-food-nfi-sugar-icon-box:before {
+  content: "\79";
+}
+.icon-other-clusters-fishery-icon-box:before {
+  content: "\7a";
+}
+.icon-other-clusters-multi-sector-icon-box:before {
+  content: "\41";
+}
+.icon-other-clusters-rule-of-law-icon-box:before {
+  content: "\42";
+}
+.icon-other-clusters-safety-security-icon-box:before {
+  content: "\43";
+}
+.icon-product-type-calendar-icon-box:before {
+  content: "\44";
+}
+.icon-product-type-chart-icon-box:before {
+  content: "\45";
+}
+.icon-socioeconomic-and-development-debris-management-icon-box:before {
+  content: "\46";
+}
+.icon-product-type-data-icon-box:before {
+  content: "\47";
+}
+.icon-product-type-table-icon-box:before {
+  content: "\48";
+}
+.icon-telecommunications-computer-icon-box:before {
+  content: "\49";
+}
+.icon-socioeconomic-and-development-trade-and-market-icon-box:before {
+  content: "\4a";
+}
+.icon-socioeconomic-and-development-rural-icon-box:before {
+  content: "\4b";
+}
+.icon-socioeconomic-and-development-urban-and-rural-icon-box:before {
+  content: "\4c";
+}
+.icon-socioeconomic-and-development-population-growth-icon:before {
+  content: "\4d";
+}
+.icon-socioeconomic-and-development-population-growth-icon-box:before {
+  content: "\4e";
+}
+.icon-food-nfi-relief-goods-icon-box:before {
+  content: "\4f";
+}
+.icon-disaster-population-return-icon-box:before {
+  content: "\50";
+}
+.icon-clusters-water-sanitation-and-hygiene-icon-box:before {
+  content: "\51";
+}
+.icon-product-type-chart-icon:before {
+  content: "\52";
+}
+.icon-other-clusters-coordination-icon:before {
+  content: "\53";
+}
+.icon-food-nfi-tent-icon-box:before {
+  content: "\54";
+}
+.icon-food-nfi-tent-icon:before {
+  content: "\55";
+}

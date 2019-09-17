@@ -1,0 +1,46 @@
+<md-content class="fullheight" ng-controller="ReportShowCtrl">
+    
+    <div style="height: calc(100% - 31px);">
+        <div ng-if="workerStatus">
+            {{ workerStatus }}
+            <div ng-if="workerState == 'PENDING'">
+                <md-progress-linear class="md-accent" md-mode="indeterminate"></md-progress-linear>
+            </div>
+        </div>
+        <div ng-if="reportData.refresh == true">
+            <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+        </div>
+        <div ng-if="reportData.statusMessage">
+            {{ reportData.statusMessage }}
+        </div>
+        <span ng-if="report.lastSaved == null">
+            Please save and generate your dataset  before atempting to create a report
+        </span>
+        <div> Visualise your dataset with a report</div>
+        
+        <div class="rep-layout">
+        <h2><span>Step 1:</span>Please select a layout for visualizing your data</h2>
+        <ul>
+        <li ng-click=""> One column <div class="icon"></div></li>
+        <li ng-click=""> Two column <div class="icon"></div></li>
+        <li ng-click=""> Two column Stacked <div class="icon"></div></li>
+        <li ng-click=""> Three column <div class="icon"></div></li>
+        <li ng-click=""> Three column Stacked <div class="icon"></div></li>
+        </ul>
+        </div>
+        <div class="rep-type"><h2><span>Step 2:</span>Select a report Type</h2>
+        <div class="content"><ul> <li>Bar</li><li>column</li><li>pie</li> </ul> </div>
+        </div>
+        <div class="axis-mapping">
+        <h2><span>Step 3:</span>Map Your Axis'</h2>
+        <ul>
+        <li ng-repeat="(key, value) in reportData.list"> {{value}} </li>
+        </ul>
+        </div>
+        <div class="axis-mapping">
+        <h2><span>Step 4:</span>Preview and Save report</h2>
+        <ul>
+        </ul>
+        </div>
+    </div>
+</md-content>

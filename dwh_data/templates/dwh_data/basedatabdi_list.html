@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+
+{% block title %}{% page_attribute "page_title" %}{% endblock title %}
+
+{% block content %}
+    {% placeholder "content" %}
+    {% for individual in object_list %}
+        <div> 
+            {{ individual.individualid }} 
+            
+        </div>
+         <div> 
+            {{ individual.concatenatedname }} 
+            
+        </div>
+         <div> 
+            {{ individual.gender }} 
+            
+        </div>
+    {% endfor %}
+{% endblock content %}

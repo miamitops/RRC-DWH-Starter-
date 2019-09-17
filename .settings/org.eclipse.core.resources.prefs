@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//dwh/static/build/css/custom.min.css=UTF-8
+encoding//dwh/urls.py=utf-8
+encoding//dwh_data/migrations/0001_initial.py=utf-8
+encoding//dwh_data/migrations/0003_auto_20160516_1944.py=utf-8
+encoding//libraries/django_nvd3/__init__.py=utf-8
+encoding//libraries/django_nvd3/nvd3/NVD3Chart.py=utf-8
+encoding//libraries/django_nvd3/nvd3/lineChart.py=utf-8
+encoding//libraries/django_nvd3/nvd3/pieChart.py=utf-8
+encoding//libraries/django_nvd3/nvd3/scatterChart.py=utf-8
+encoding//situations/migrations/0001_initial.py=utf-8
